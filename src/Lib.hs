@@ -13,14 +13,8 @@ import           Data.Time.Calendar       (Day, fromGregorian)
 import           GHC.Generics
 import           Network.Wai
 import           Network.Wai.Handler.Warp
-import           Servant                  ((:<|>) ((:<|>)), (:>))
+import           Servant                  ((:>))
 import qualified Servant
-
--- data User = User
---   { userId        :: Int
---   , userFirstName :: String
---   , userLastName  :: String
---   } deriving (Eq, Ord, Show)
 
 data User = User {
   name              :: String,
@@ -31,10 +25,7 @@ data User = User {
 
 $(deriveJSON defaultOptions ''User)
 
-data SortBy = Age | Name
-
--- type API = "users" :> Get '[JSON] [User]
-type UserAPI = "users" :> Servant.Get '[Servant.JSON] [User]
+type API = "users" :> Servant.Get '[Servant.JSON] [User]
 
 startApp :: IO ()
 startApp = run 8080 app
@@ -42,10 +33,10 @@ startApp = run 8080 app
 app :: Application
 app = Servant.serve api server
 
-api :: Servant.Proxy UserAPI
+api :: Servant.Proxy API
 api = Servant.Proxy
 
-server :: Servant.Server UserAPI
+server :: Servant.Server API
 server = return users
 
 users :: [User]
