@@ -1,4 +1,4 @@
-# Simple Servant Server Template
+# Simple Haskell Server Template
 This is a Haskell Servant web server project template that can be used to start a project right away.
 
 The project uses [Haskell Stack] as the build tool.
